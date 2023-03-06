@@ -4,8 +4,10 @@
   "description": "an ecommerce app with multivendor",
   "main": "index.js",
   "scripts": {
-    "demarer":"nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "demarer": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:fix":"eslint --fix ./*.js",
+    "lint":"eslint ./*.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,11 @@
     "express": "^4.18.2"
   },
   "devDependencies": {
+    "eslint": "^8.35.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
     "nodemon": "^2.0.21"
   }
 }
