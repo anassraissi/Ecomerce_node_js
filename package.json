@@ -10,11 +10,16 @@
     "type": "git",
     "url": "git+https://github.com/anassraissi/Ecomerce_node_js.git"
   },
-  "keywords": ["ecommerce"],
+  "keywords": [
+    "ecommerce"
+  ],
   "author": "Anass",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/anassraissi/Ecomerce_node_js/issues"
   },
-  "homepage": "https://github.com/anassraissi/Ecomerce_node_js#readme"
+  "homepage": "https://github.com/anassraissi/Ecomerce_node_js#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
