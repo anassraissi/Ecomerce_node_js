@@ -1,7 +1,8 @@
 const express = require('express')
 const app = express()
+app.set('view engin', 'ejs')
 app.get('/', function (req, res) {
-  return res.send('hello world!')
+  return res.render('index.ejs')
 })
 
 app.listen(3000, function () {

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "demarer": "nodemon index.js",
-    "test": "mocha test/*.js --exit" ,
+    "test": "mocha test/*.js --exit",
     "lint:fix": "eslint --fix ./*.js",
     "lint": "eslint ./*.js"
   },
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/anassraissi/Ecomerce_node_js#readme",
   "dependencies": {
+    "ejs": "^3.1.8",
     "express": "^4.18.2"
   },
   "devDependencies": {
