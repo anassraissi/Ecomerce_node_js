@@ -1,4 +1,5 @@
 const express = require('express')
+require('./views/utils/db.config.js')
 const app = express()
 app.set('view engin', 'ejs')
 app.get('/', function (req, res) {
