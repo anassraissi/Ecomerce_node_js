@@ -5,7 +5,6 @@ const bodyParser = require('body-parser')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
-
 app.set('view engin', 'ejs')
 app.get('/', function (req, res) {
   return res.render('index.ejs')
