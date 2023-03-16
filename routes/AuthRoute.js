@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { addUser } = require('../modules/users/service/UserService')
+const { joiErrorFormatter, MonggoseErrorFormatter } = require('../views/utils/ValidationFormatter')
 /**
  * RegisterSchema to check register valdation
  */
@@ -24,9 +25,11 @@ router.post('/register', async (req, res) => {
       abortEarly: false
     })
     if (ValidationResult.error) {
-      return res.render('register.ejs', { message: 'Registration errors' })
+      return res.render(ValidationResult.error)
     }
-    res.send(ValidationResult)
+    // res.send(MonggoseErrorFormatter(ValidationResult.error)) joi
+    // res.send(joiErrorFormatter(ValidationResult.error))  mongoose
+
     const user = await addUser(req.body)
     res.render('register.ejs', { message: 'Registration successful' })
   } catch (e) {
