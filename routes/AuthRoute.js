@@ -10,7 +10,7 @@ const { RegisterSchema } = require('../modules/users/Validation/AuthValidation')
     show page for user registration
 */
 router.get('/register', function (req, res) {
-  return res.render('register.ejs', { message: '' })
+  return res.render('register.ejs', { message: '', errors: '', FormData: '' })
 })
 
 /**
@@ -25,15 +25,38 @@ router.post('/register', async (req, res) => {
       abortEarly: false
     })
     if (ValidationResult.error) {
-      return res.render(ValidationResult.error)
+      return res.render('register.ejs', {
+        message: {
+          type: 'error',
+          body: 'Validation errors'
+        },
+        errors: MonggoseErrorFormatter(ValidationResult.error),
+        FormData: req.body
+      })
     }
-    // res.send(MonggoseErrorFormatter(ValidationResult.error)) joi
+    // res.send(MonggoseErrorFormatter(ValidationResult.error))
     // res.send(joiErrorFormatter(ValidationResult.error))  mongoose
-
     const user = await addUser(req.body)
-    res.render('register.ejs', { message: 'Registration successful' })
+    return res.render('register.ejs', {
+      message: {
+        type: 'success',
+        body: 'Registration done'
+      },
+      errors: '',
+      FormData: ''
+    })
   } catch (e) {
-    return res.status(400).render('register.ejs', { message: 'something went wrong' })
+    return res.status(400).render('register.ejs',
+      {
+        message: {
+          type: 'error',
+          body: 'Validation errors'
+        },
+        errors: MonggoseErrorFormatter(e),
+        FormData: req.body
+      }
+
+    )
   }
 })
 module.exports = router

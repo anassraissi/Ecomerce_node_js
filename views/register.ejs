@@ -3,27 +3,60 @@
   <%- include('./includes/head.ejs') %>
   <body>
     <%- include('./includes/nav.ejs') %>
-    <div class="container mt-5">
+    <div class="container mt-3">
       <h1>Registration</h1>
       <% if (message) { %>
-        <div class="alert alert-success" role="alert">
-              <%=message %>
+        <div class="alert alert-<%= message.type==='success'? 'success' : 'danger' %>" role="alert">
+              <%=message.body %>
           </div>
         <% } %> 
         <form method="POST"  action="/register">
-            <div class="mb-3">
+            <div class="mb-1">
               <label for="name" class="form-label">Name<sub style="color:red">*</sub></label>
-              <input type="text" class="form-control" id="name" name="name" aria-describedby="name_help">
-              <div id="name_help" class="form-text">We'll never share your name with anyone else.</div>
+              <input type="text" 
+              class="form-control <%=errors.name ? 'is-invalid': '' %>"
+               id="name" name="name" aria-describedby="name_help"
+              value="<%=FormData.name%>" minlength="2" required>
+              <% if (errors.name) { %>
+              <div class="invalid-feedback">
+               <%= errors.name %>
+              </div>
+              <% } %> 
+              <div id="name_help" class="form-text">We'll never share your  name with anyone else.</div>
             </div>
-            <div class="mb-3">
+            <div class="mb-1">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+                <input type="email" 
+                class="form-control <%=errors.email ? 'is-invalid': '' %> " 
+                 id="exampleInputEmail1" aria-describedby="emailHelp"
+                  name="email" required maxlength="128"
+                  value="<%=FormData.email%>">
+                  
+                <% if (errors.email) { %>
+                  <div class="invalid-feedback">
+                   <%= errors.email %>
+                  </div>
+                  <% } %> 
                 <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
               </div>
-            <div class="mb-3">
+            <div class="mb-1">
               <label for="exampleInputPassword1" class="form-label">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+              <input type="password"
+               class="form-control <%=errors.password ? 'is-invalid': '' %>" 
+               id="exampleInputPassword1" name="password"
+               value="" required>
+              <% if (errors.password) { %>
+                <div class="invalid-feedback">
+                 <%= errors.password %>
+                </div>
+                <% } %>
+            </div>
+            <div class="mb-1">
+              <label for="repeat_password" class="form-label">Repeat Password</label>
+              <input type="password"
+               class="form-control <%=errors.password ? 'is-invalid': '' %>" 
+               id="exampleInputPassword1" name="repeat_password"
+               value="" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
