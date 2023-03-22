@@ -12,7 +12,6 @@ const { RegisterSchema } = require('../modules/users/Validation/AuthValidation')
 router.get('/register', function (req, res) {
   return res.render('register.ejs', { message: '', errors: '', FormData: '' })
 })
-
 /**
     handle user registration
  */
