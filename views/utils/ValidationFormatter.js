@@ -13,7 +13,6 @@ const MonggoseErrorFormatter = (rawError) => {
   for (const key in details) {
     MongoErr[details[key].context.key] = [details[key].message]
   }
-
   return MongoErr
 }
 // jbad ghi les object li fihom error btari9a mongoose
