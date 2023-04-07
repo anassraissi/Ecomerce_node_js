@@ -59,10 +59,23 @@ router.post('/register', async (req, res) => {
   }
 })
 // routes for login
+
+// exemple of middleware in login post
+
+const meddleware1 = (req, res, next) => {
+  req.user = 'Anass'
+  next()
+}
+const meddleware2 = (req, res, next) => {
+  console.log(req.url)
+  next()
+}
 router.get('/login', function (req, res) {
   return res.render('login.ejs', { message: '', errors: '', FormData: '' })
 })
-router.post('/login', function (req, res) {
+router.post('/login', meddleware1, meddleware2, (req, res) => {
+  console.log(req.user)
+
   return res.render('login.ejs',
     {
       message: { type: 'success', body: 'Login done' },
