@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <%- include('./includes/head.ejs') %>
+  <body>
+    <%- include('./includes/nav.ejs') %>
+    <div class="container mt-3">
+      <h1>Registration</h1>
+      <% if (message) { %>
+        <div class="alert alert-<%= message.type==='success'? 'success' : 'danger' %>" role="alert">
+              <%=message.body %>
+          </div>
+        <% } %>
+        <form method="POST"  action="/login">
+            <div class="mb-1">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email"
+                class="form-control <%=errors.email ? 'is-invalid': '' %> "
+                 id="exampleInputEmail1" aria-describedby="emailHelp"
+                  name="email" required maxlength="128"
+                  value="<%=FormData.email%>">
+
+                <% if (errors.email) { %>
+                  <div class="invalid-feedback">
+                   <%= errors.email %>
+                  </div>
+                  <% } %>
+              </div>
+            <div class="mb-1">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password"
+               class="form-control <%=errors.password ? 'is-invalid': '' %>"
+               id="exampleInputPassword1" name="password"
+               value="" required>
+              <% if (errors.password) { %>
+                <div class="invalid-feedback">
+                 <%= errors.password %>
+                </div>
+                <% } %>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    </div>
+    <%- include('./includes/footer.ejs') %>
+  </body>
+</html>
