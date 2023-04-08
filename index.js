@@ -2,6 +2,8 @@ const express = require('express')
 const session = require('express-session')
 require('./views/utils/db.config.js')
 const bodyParser = require('body-parser')
+const passport = require('passport')
+require('./views/utils/AuthStrategy/LocalStrategy')
 
 const authRoute = require('./routes/AuthRoute')
 
@@ -14,6 +16,8 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false }
 }))
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use('/', authRoute)
 
@@ -25,11 +29,13 @@ app.get('/', function (req, res) {
 
   // n3arfo chhal mn mra tvisita site dyalna
 
-  req.session.views = (req.session.views || 0) + 1
+  // req.session.views = (req.session.views || 0) + 1
 
   // mra lawla khayakhad req.session.views ghaykon indefinded wbitali ghayakhed 1
 
-  console.log(` you have visited ${req.session.views}`)
+  // console.log(` you have visited ${req.session.views}`)
+
+  console.log('user :', req.user)
 
   return res.render('index.ejs')
 })

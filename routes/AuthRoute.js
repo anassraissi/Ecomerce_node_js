@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { addUser } = require('../modules/users/service/UserService')
 const { joiErrorFormatter, MonggoseErrorFormatter } = require('../views/utils/ValidationFormatter')
+const passport = require('passport')
 /**
  * RegisterSchema to check register valdation
  */
@@ -62,18 +63,24 @@ router.post('/register', async (req, res) => {
 
 // exemple of middleware in login post
 
-const meddleware1 = (req, res, next) => {
-  req.user = 'Anass'
-  next()
-}
-const meddleware2 = (req, res, next) => {
-  console.log(req.url)
-  next()
-}
+// const meddleware1 = (req, res, next) => {
+//   req.user = 'Anass'
+//   next()
+// }
+// const meddleware2 = (req, res, next) => {
+//   console.log(req.url)
+//   next()
+// }
 router.get('/login', function (req, res) {
   return res.render('login.ejs', { message: '', errors: '', FormData: '' })
 })
-router.post('/login', meddleware1, meddleware2, (req, res) => {
+router.post('/login', passport.authenticate('local', // Local meaning  get as HTML form
+  {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }
+),
+(req, res) => {
   console.log(req.user)
 
   return res.render('login.ejs',
