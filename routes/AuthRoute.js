@@ -3,6 +3,7 @@ const router = express.Router()
 const { addUser } = require('../modules/users/service/UserService')
 const { joiErrorFormatter, MonggoseErrorFormatter } = require('../views/utils/ValidationFormatter')
 const passport = require('passport')
+const guestMiddleware = require('../Middelwares/guestMiddleware')
 /**
  * RegisterSchema to check register valdation
  */
@@ -10,13 +11,13 @@ const { RegisterSchema } = require('../modules/users/Validation/AuthValidation')
 /*
     show page for user registration
 */
-router.get('/register', function (req, res) {
+router.get('/register', guestMiddleware, function (req, res) {
   return res.render('register.ejs', { message: '', errors: '', FormData: '' })
 })
 /**
     handle user registration
  */
-router.post('/register', async (req, res) => {
+router.post('/register', guestMiddleware, async (req, res) => {
   try {
     /**
        * check validation
@@ -71,7 +72,7 @@ router.post('/register', async (req, res) => {
 //   console.log(req.url)
 //   next()
 // }
-router.get('/login', function (req, res) {
+router.get('/login', guestMiddleware, function (req, res) {
   return res.render('login.ejs', { message: '', errors: '', FormData: '' })
 })
 router.post('/login', passport.authenticate('local', // Local meaning  get as HTML form

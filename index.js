@@ -6,6 +6,7 @@ const MongoStore = require('connect-mongo')(session)
 const mongoDbConnection = require('./views/utils/db.config.js')
 const passport = require('passport')
 require('./views/utils/AuthStrategy/LocalStrategy')
+const authMiddleware = require('./Middelwares/authMiddleware.js')
 
 const authRoute = require('./routes/AuthRoute')
 
@@ -25,7 +26,7 @@ app.use(passport.session())
 
 app.use('/', authRoute)
 
-app.get('/', function (req, res) {
+app.get('/', authMiddleware, function (req, res) {
   console.log(req.session)
   // n3arfo user mnin ydkhal server
 
@@ -42,6 +43,9 @@ app.get('/', function (req, res) {
   console.log('user :', req.user)
 
   return res.render('index.ejs')
+})
+app.get('/homepage', authMiddleware, (req, res) => {
+  res.send(`wellcome ${req.user.name}`)
 })
 
 app.listen(3000, function () {
