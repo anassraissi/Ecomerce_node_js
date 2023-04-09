@@ -12,7 +12,7 @@ const { RegisterSchema } = require('../modules/users/Validation/AuthValidation')
     show page for user registration
 */
 router.get('/register', guestMiddleware, function (req, res) {
-  return res.render('register.ejs', { message: '', errors: '', FormData: '' })
+  return res.render('register.ejs')
 })
 /**
     handle user registration
@@ -73,7 +73,7 @@ router.post('/register', guestMiddleware, async (req, res) => {
 //   next()
 // }
 router.get('/login', guestMiddleware, function (req, res) {
-  return res.render('login.ejs', { message: '', errors: '', FormData: '' })
+  return res.render('login.ejs')
 })
 router.post('/login', passport.authenticate('local', // Local meaning  get as HTML form
   {

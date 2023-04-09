@@ -5,8 +5,8 @@
     <%- include('./includes/nav.ejs') %>
     <div class="container mt-3">
       <h1>Registration</h1>
-      <% if (message) { %>
-        <div class="alert alert-<%= message.type==='success'? 'success' : 'danger' %>" role="alert">
+      <% if (message.type) { %>
+        <div class="alert alert-<%= message.type==='success && '? 'success' : 'danger' %>" role="alert">
               <%=message.body %>
           </div>
         <% } %>

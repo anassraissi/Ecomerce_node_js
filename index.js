@@ -24,10 +24,15 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.locals.message = {}
+app.locals.errors = {}
+app.locals.FormData = {}
+
 app.use('/', authRoute)
 
 app.get('/', authMiddleware, function (req, res) {
   console.log(req.session)
+
   // n3arfo user mnin ydkhal server
 
   // !req.session.name ? req.session.name = 'Anass Raissi' : console.log(req.session.name)
