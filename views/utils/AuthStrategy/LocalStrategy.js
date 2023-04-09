@@ -9,7 +9,10 @@ passport.use(new LocalStrategy({
 async (email, password, done) => {
   try {
     const user = await User.findOne({ email })
-    return done(null, user)
+    if (!user) return done(null, false)
+    if (await user.checkpassword(password)) return done(null, user)
+    // await katsana tatjib resultat 3ad takamal
+    return done(null, false) // null for error and false -> za3ma not defiend
   } catch (e) {
     done(e)
   }
