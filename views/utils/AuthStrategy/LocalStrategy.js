@@ -34,7 +34,6 @@ async (email, password, done) => {
  * and deserialized when subsequent requests are made.
  *  */
 
-
 passport.serializeUser(function (user, done) {
   done(null, user) //
 })
