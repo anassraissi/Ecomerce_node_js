@@ -4,6 +4,7 @@ const { addUser } = require('../modules/users/service/UserService')
 const { joiErrorFormatter, MonggoseErrorFormatter } = require('../views/utils/ValidationFormatter')
 const passport = require('passport')
 const guestMiddleware = require('../Middelwares/guestMiddleware')
+const authMiddleware = require('../Middelwares/authMiddleware')
 /**
  * RegisterSchema to check register valdation
  */
@@ -90,5 +91,11 @@ router.post('/login', passport.authenticate('local', // Local meaning  get as HT
       errors: '',
       FormData: ''
     })
+})
+router.get('/logout', authMiddleware, function (req, res, next) {
+  req.logout(function (err) {
+    if (err) { return next(err) }
+    res.redirect('/')
+  })
 })
 module.exports = router

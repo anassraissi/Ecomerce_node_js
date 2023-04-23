@@ -13,6 +13,9 @@ const authRoute = require('./routes/AuthRoute')
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 app.set('view engin', 'ejs')
+
+// bach y339al serveur 3la session ghandakhloha flabse de donnee.
+
 app.use(session({
   secret: '3bed90ba1cbbb66edc1e4528b681e7fa20fab4be',
   resave: false,
@@ -31,6 +34,7 @@ app.locals.FormData = {}
 app.use('/', authRoute)
 
 app.get('/', authMiddleware, function (req, res) {
+  // ytisti ila kan 3ando session ydkhal nichan home page li hia index.ejs ila makan ydoz bhad route l login
   console.log(req.session)
 
   // n3arfo user mnin ydkhal server
