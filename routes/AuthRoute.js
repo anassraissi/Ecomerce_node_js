@@ -5,6 +5,7 @@ const { joiErrorFormatter, MonggoseErrorFormatter } = require('../views/utils/Va
 const passport = require('passport')
 const guestMiddleware = require('../Middelwares/guestMiddleware')
 const authMiddleware = require('../Middelwares/authMiddleware')
+const flashDataMiddel = require('../Middelwares/FlashDataMiddelware')
 /**
  * RegisterSchema to check register valdation
  */
@@ -12,7 +13,7 @@ const { RegisterSchema } = require('../modules/users/Validation/AuthValidation')
 /*
     show page for user registration
 */
-router.get('/register', guestMiddleware, function (req, res) {
+router.get('/register', guestMiddleware, flashDataMiddel, function (req, res) {
   return res.render('register.ejs')
 })
 /**
@@ -27,14 +28,16 @@ router.post('/register', guestMiddleware, async (req, res) => {
       abortEarly: false
     })
     if (ValidationResult.error) {
-      return res.render('register.ejs', {
+      req.session.flashData = {
         message: {
           type: 'error',
           body: 'Validation errors'
         },
         errors: MonggoseErrorFormatter(ValidationResult.error),
         FormData: req.body
-      })
+      }
+      console.log(req.session.flashData[0])
+      return res.redirect('/register')
     }
     // res.send(MonggoseErrorFormatter(ValidationResult.error))
     // res.send(joiErrorFormatter(ValidationResult.error))  mongoose

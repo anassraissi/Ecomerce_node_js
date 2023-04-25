@@ -7,6 +7,7 @@ const mongoDbConnection = require('./views/utils/db.config.js')
 const passport = require('passport')
 require('./views/utils/AuthStrategy/LocalStrategy')
 const authMiddleware = require('./Middelwares/authMiddleware.js')
+const logger = require('morgan')
 
 const authRoute = require('./routes/AuthRoute')
 
@@ -23,7 +24,7 @@ app.use(session({
   cookie: { secure: false },
   store: new MongoStore({ mongooseConnection: mongoDbConnection })
 }))
-
+app.use(logger('dev'))
 app.use(passport.initialize())
 app.use(passport.session())
 
