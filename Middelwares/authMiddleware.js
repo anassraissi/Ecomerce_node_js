@@ -3,7 +3,7 @@ const authMiddleware = (req, res, next) => {
   if (req.isAuthenticated()) { return next() }
   res.redirect('/login')
 
-  //ila kan 3ando session bach ydkhal ykamal route il kan 3aks ydih login
+  // ila kan 3ando session bach ydkhal ykamal route il kan 3aks ydih login
 
   /**   else another write
    *

@@ -76,25 +76,56 @@ router.post('/register', guestMiddleware, async (req, res) => {
 //   console.log(req.url)
 //   next()
 // }
-router.get('/login', guestMiddleware, function (req, res) {
+router.get('/login', guestMiddleware, flashDataMiddel, function (req, res) {
   return res.render('login.ejs')
 })
-router.post('/login', passport.authenticate('local', // Local meaning  get as HTML form
-  {
-    successRedirect: '/',
-    failureRedirect: '/login'
-  }
-),
-(req, res) => {
-  console.log(req.user)
 
-  return res.render('login.ejs',
-    {
-      message: { type: 'success', body: 'Login done' },
-      errors: '',
-      FormData: ''
+router.post('/login', guestMiddleware, (req, res, next) => {
+  passport.authenticate('local', (err, user, info, pass) => { // err => null ,user =>
+    console.log('err', err)
+    console.log('user', user)
+    console.log('err', info)
+    // return res.redirect('/login')
+    // if (err === 'undefined') {
+    //   req.session.flashData = {
+    //     message: {
+    //       type: 'error',
+    //       body: 'Login Faileddd'
+    //     }
+    //   }
+    //   return res.redirect('/login')
+    // }
+    if (!user) {
+      req.session.flashData = {
+        message: {
+          type: 'error',
+          body: 'user incorrect'
+        }
+      }
+      return res.redirect('/login')
+    } if (pass === 'false') {
+      req.session.flashData = {
+        message: {
+          type: 'error',
+          body: 'password incorrect'
+        }
+      }
+      return res.redirect('/login')
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        req.session.flashData = {
+          message: {
+            type: 'error',
+            body: 'Login failed'
+          }
+        }
+      }
+      return res.redirect('/homepage')
     })
+  })(req, res, next)
 })
+
 router.get('/logout', authMiddleware, function (req, res, next) {
   req.logout(function (err) {
     if (err) { return next(err) }
