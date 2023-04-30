@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const session = require('express-session')
 require('./views/utils/db.config.js')
@@ -8,6 +9,7 @@ const passport = require('passport')
 require('./views/utils/AuthStrategy/LocalStrategy')
 const authMiddleware = require('./Middelwares/authMiddleware.js')
 const logger = require('morgan')
+const config = require('./views/utils/config.js')
 
 const authRoute = require('./routes/AuthRoute')
 
@@ -63,8 +65,8 @@ app.use((req, res, next) => {
   res.status(404).render('404')
   // for show this file must be in the view folder not in a folder inside view
 })
-
-app.listen(3000, function () {
-  console.log('Server running at port 3000')
+   // config.port =3000 li jaya mn config
+app.listen(config.port, function () {
+  console.log(`Server running at port ${config.port}`)
 })
 module.exports = app
