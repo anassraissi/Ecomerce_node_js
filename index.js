@@ -13,7 +13,7 @@ const authRoute = require('./routes/AuthRoute')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
-app.set('view engin', 'ejs')
+app.set('view engine', 'ejs')
 
 // bach y339al serveur 3la session ghandakhloha flabse de donnee.
 
@@ -24,6 +24,8 @@ app.use(session({
   cookie: { secure: false },
   store: new MongoStore({ mongooseConnection: mongoDbConnection })
 }))
+app.use(express.static('public'))
+
 app.use(logger('dev'))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -56,6 +58,10 @@ app.get('/', authMiddleware, function (req, res) {
 })
 app.get('/homepage', authMiddleware, (req, res) => {
   res.send(`wellcome ${req.user.name}`)
+})
+app.use((req, res, next) => {
+  res.status(404).render('404')
+  // for show this file must be in the view folder not in a folder inside view
 })
 
 app.listen(3000, function () {
