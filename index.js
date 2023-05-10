@@ -65,7 +65,7 @@ app.use((req, res, next) => {
   res.status(404).render('404')
   // for show this file must be in the view folder not in a folder inside view
 })
-   // config.port =3000 li jaya mn config
+// config.port =3000 li jaya mn config
 app.listen(config.port, function () {
   console.log(`Server running at port ${config.port}`)
 })

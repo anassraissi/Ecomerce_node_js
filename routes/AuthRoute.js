@@ -36,29 +36,30 @@ router.post('/register', guestMiddleware, async (req, res) => {
         errors: MonggoseErrorFormatter(ValidationResult.error),
         FormData: req.body
       }
-      console.log(req.session.flashData[0])
+      console.log(joiErrorFormatter(ValidationResult.error))
       return res.redirect('/register')
     }
     // res.send(MonggoseErrorFormatter(ValidationResult.error))
     // res.send(joiErrorFormatter(ValidationResult.error))  mongoose
     const user = await addUser(req.body)
+
     return res.render('register.ejs', {
       message: {
         type: 'success',
-        body: 'Registration done'
+        body: 'Registration done',
       },
       errors: '',
-      FormData: ''
+      FormData: req.body
     })
   } catch (e) {
     return res.status(400).render('register.ejs',
       {
         message: {
           type: 'error',
-          body: 'Validation errors'
+          body: 'email exist in database try new email'
         },
-        errors: MonggoseErrorFormatter(e),
-        FormData: req.body
+        errors: '',
+        FormData: ''
       }
 
     )
@@ -81,10 +82,11 @@ router.get('/login', guestMiddleware, flashDataMiddel, function (req, res) {
 })
 
 router.post('/login', guestMiddleware, (req, res, next) => {
-  passport.authenticate('local', (err, user, info, pass) => { // err => null ,user =>
+  passport.authenticate('local', (err, user) => { // err => null ,user =>
     console.log('err', err)
     console.log('user', user)
-    console.log('err', info)
+    // console.log('pass', pass)
+    // console.log('info', info)
     // return res.redirect('/login')
     // if (err === 'undefined') {
     //   req.session.flashData = {
@@ -99,15 +101,7 @@ router.post('/login', guestMiddleware, (req, res, next) => {
       req.session.flashData = {
         message: {
           type: 'error',
-          body: 'user incorrect'
-        }
-      }
-      return res.redirect('/login')
-    } if (pass === 'false') {
-      req.session.flashData = {
-        message: {
-          type: 'error',
-          body: 'password incorrect'
+          body: 'user ou Password est invalide'
         }
       }
       return res.redirect('/login')

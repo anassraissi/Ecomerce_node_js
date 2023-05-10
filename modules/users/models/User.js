@@ -26,6 +26,11 @@ const schema = mongoose.Schema({
     default: true
   }
 })
+schema.path('email').validate(async (email) => {
+  const emailCount = await mongoose.models.user.countDocuments({ email })
+  return !emailCount // ila kan >0 ghayreturn false mntema ghaytla3 error
+}, 'email already exists')
+
 schema.pre('save', async function (next) {
   if (!this.isModified('password')) next()
   this.password = await bcrypt.hash(this.password, 10)

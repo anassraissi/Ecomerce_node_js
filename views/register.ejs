@@ -37,17 +37,18 @@
                    <%= errors.email %>
                   </div>
                   <% } %>
+
                 <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
               </div>
             <div class="mb-1">
               <label for="exampleInputPassword1" class="form-label">Password</label>
               <input type="password"
-               class="form-control <%=errors.password ? 'is-invalid': '' %>"
+               class="form-control <%=(errors.repeat_password) ? 'is-invalid': '' %>"
                id="exampleInputPassword1" name="password"
                value="" required>
-              <% if (errors.password) { %>
+              <% if (errors.repeat_password) { %>
                 <div class="invalid-feedback">
-                 <%= errors.password %>
+                 <p>repeat_password must be equal password</p>
                 </div>
                 <% } %>
             </div>
