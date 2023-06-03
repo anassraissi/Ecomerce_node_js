@@ -42,11 +42,12 @@ router.post('/register', guestMiddleware, async (req, res) => {
     // res.send(MonggoseErrorFormatter(ValidationResult.error))
     // res.send(joiErrorFormatter(ValidationResult.error))  mongoose
     const user = await addUser(req.body)
+    // hna katkhdam dik check dyal email wach kayn fdatabase 3ad ydawazha
 
     return res.render('register.ejs', {
       message: {
         type: 'success',
-        body: 'Registration done',
+        body: 'Registration done'
       },
       errors: '',
       FormData: req.body
